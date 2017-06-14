@@ -1,0 +1,248 @@
+
+<div data-page="membership" class="page">
+    <div class="navbar">
+        <div class="navbar-inner">
+            <div class="left"><a href="index.html" class="back link icon-only"><i class="icon icon-back"></i></a></div>
+            <div class="center">Membership</div>
+            <div class="right"><a href="#" class="open-panel link icon-only"><i class="icon icon-bars"></i></a></div>
+        </div>
+    </div>
+    <div class="page-content">
+        <div data-pagination=".swiper-pagination" data-paginationHide="true" class="swiper-container swiper-init ks-demo-slider">
+            <div class="swiper-pagination"></div>
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <div class="data-table">
+                        <table>
+                            <thead>
+                            <tr class="bg-blu">
+                                <th class="label-cell">Membership</th>
+                                <th class="label-cell">Basic</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th class="label-cell">Profile Display</th>
+                                <td class="label-cell">No Contact Details</td>
+                            </tr>
+                            <tr>
+                                <th class="label-cell">Student Ablity To Contact You</th>
+                                <td class="label-cell">1 Student contact per month</td>
+                            </tr>
+                            <tr>
+                                <th class="label-cell">Respond To Requirement Posting</th>
+                                <td class="label-cell">Contact 1 student per month </td>
+                            </tr>
+                            <tr>
+                                <th class="label-cell">Profile Ranking on Search</th>
+                                <td class="label-cell">Not displayed on first 2 pages</td>
+                            </tr>
+                            <tr>
+                                <th class="label-cell">No. of subjects</th>
+                                <td class="label-cell">1</td>
+                            </tr>
+                            <!--Tutor-->
+                            <tr class="tutor">
+                                <th class="bg-blu" colspan="2" style="text-align: center">Subscription Rates For Private Tutors</th>
+                            </tr>
+                            <tr class="tutor">
+                                <th class="label-cell">Monthly</th>
+                                <td class="label-cell">
+                                    <label class="label-radio item-content">
+                                        <input type="radio" name="cradio" onclick="getPeriod(this)" data-price="0" value="30">
+                                        <div class="item-media"><i class="icon icon-form-radio"></i></div>
+                                        <div class="item-inner">
+                                            <div class="item-title">Free</div>
+                                        </div>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr class="tutor">
+                                <th class="label-cell">6 Monthly</th>
+                                <td class="label-cell">
+                                    <label class="label-radio item-content">
+                                        <input type="radio" name="cradio" onclick="getPeriod(this)" data-price="0" value="182.5">
+                                        <div class="item-media"><i class="icon icon-form-radio"></i></div>
+                                        <div class="item-inner">
+                                            <div class="item-title">Free</div>
+                                        </div>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr class="tutor">
+                                <th class="label-cell">Annual</th>
+                                <td class="label-cell">
+                                    <label class="label-radio item-content">
+                                        <input type="radio" name="cradio" onclick="getPeriod(this)" data-price="0" value="365">
+                                        <div class="item-media"><i class="icon icon-form-radio"></i></div>
+                                        <div class="item-inner">
+                                            <div class="item-title">Free</div>
+                                        </div>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr class="institute">
+                                <th class="bg-blu" colspan="2" style="text-align: center">Subscription Rates For Institutes</th>
+                            </tr>
+                            <tr class="institute">
+                                <th class="label-cell">Monthly</th>
+                                <td class="label-cell">
+                                    <label class="label-radio item-content">
+                                        <input type="radio" name="cradio" onclick="getPeriod(this)" data-price="0" value="30" >
+                                        <div class="item-media"><i class="icon icon-form-radio"></i></div>
+                                        <div class="item-inner">
+                                            <div class="item-title">Free</div>
+                                        </div>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr class="institute">
+                                <th class="label-cell">6 Monthly</th>
+                                <td class="label-cell">
+                                    <label class="label-radio item-content">
+                                        <input type="radio" name="cradio" onclick="getPeriod(this)" data-price="0" value="182.5">
+                                        <div class="item-media"><i class="icon icon-form-radio"></i></div>
+                                        <div class="item-inner">
+                                            <div class="item-title">Free</div>
+                                        </div>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr class="institute">
+                                <th class="label-cell">Annual</th>
+                                <td class="label-cell">
+                                    <label class="label-radio item-content">
+                                        <input type="radio" name="cradio" onclick="getPeriod(this)" data-price="0"  value="365">
+                                        <div class="item-media"><i class="icon icon-form-radio"></i></div>
+                                        <div class="item-inner">
+                                            <div class="item-title">Free</div>
+                                        </div>
+                                    </label>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <p>
+                            <a href="#" id="basic" class="button button-fill button-raised">Activate</a>
+                        </p>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="data-table">
+                        <table>
+                            <thead>
+                            <tr class="bg-blu">
+                                <th class="label-cell">Membership</th>
+                                <th class="label-cell">Premium</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th class="label-cell">Profile Display</th>
+                                <td class="label-cell">All Details Displayed</td>
+                            </tr>
+                            <tr>
+                                <th class="label-cell">Student Ablity To Contact You</th>
+                                <td class="label-cell">Unlimited</td>
+                            </tr>
+                            <tr>
+                                <th class="label-cell">Respond To Requirement Posting</th>
+                                <td class="label-cell">Unlimited</td>
+                            </tr>
+                            <tr>
+                                <th class="label-cell">Profile Ranking on Search</th>
+                                <td class="label-cell">Showcased as premium member (PREMIUM BADGE) (first page)</td>
+                            </tr>
+                            <tr >
+                                <th class="label-cell">No. of subjects</th>
+                                <td class="label-cell">5</td>
+                            </tr>
+                            <tr class="tutor">
+                                <th class="bg-blu" colspan="2" style="text-align: center">Subscription Rates For Private Tutors</th>
+                            </tr>
+                            <tr class="tutor">
+                                <th class="label-cell">Monthly</th>
+                                <td class="label-cell">
+                                    <label class="label-radio item-content">
+                                        <input type="radio" name="cradio" onclick="getPeriod(this)"  data-price="110" value="30">
+                                        <div class="item-media"><i class="icon icon-form-radio"></i></div>
+                                        <div class="item-inner">
+                                            <div class="item-title">AED 110.00</div>
+                                        </div>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr class="tutor">
+                                <th class="label-cell">6 Monthly</th>
+                                <td class="label-cell">
+                                    <label class="label-radio item-content">
+                                        <input type="radio" name="cradio" onclick="getPeriod(this)" data-price="380"  value="182.5">
+                                        <div class="item-media"><i class="icon icon-form-radio"></i></div>
+                                        <div class="item-inner">
+                                            <div class="item-title">AED 380.00</div>
+                                        </div>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr class="tutor">
+                                <th class="label-cell">Annual</th>
+                                <td class="label-cell">
+                                    <label class="label-radio item-content">
+                                        <input type="radio" name="cradio" onclick="getPeriod(this)" data-price="790" value="365">
+                                        <div class="item-media"><i class="icon icon-form-radio"></i></div>
+                                        <div class="item-inner">
+                                            <div class="item-title">AED 790.00</div>
+                                        </div>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr class="institute">
+                                <th class="bg-blu" colspan="2" style="text-align: center">Subscription Rates For Institutes</th>
+                            </tr>
+                            <tr class="institute">
+                                <th class="label-cell">Monthly</th>
+                                <td class="label-cell">
+                                    <label class="label-radio item-content">
+                                        <input type="radio" name="cradio" onclick="getPeriod(this)" data-price="230"  value="30">
+                                        <div class="item-media"><i class="icon icon-form-radio"></i></div>
+                                        <div class="item-inner">
+                                            <div class="item-title">AED 230.00</div>
+                                        </div>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr class="institute">
+                                <th class="label-cell">6 Monthly</th>
+                                <td class="label-cell">
+                                    <label class="label-radio item-content">
+                                        <input type="radio" name="cradio" onclick="getPeriod(this)" data-price="1070"  value="182.5">
+                                        <div class="item-media"><i class="icon icon-form-radio"></i></div>
+                                        <div class="item-inner">
+                                            <div class="item-title">AED 1070.00</div>
+                                        </div>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr class="institute">
+                                <th class="label-cell">Annual</th>
+                                <td class="label-cell">
+                                    <label class="label-radio item-content">
+                                        <input type="radio" name="cradio" onclick="getPeriod(this)" data-price="1850" value="365">
+                                        <div class="item-media"><i class="icon icon-form-radio"></i></div>
+                                        <div class="item-inner">
+                                            <div class="item-title">AED 1850.00</div>
+                                        </div>
+                                    </label>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <p>
+                            <a href="#" id="premium" class="button button-fill button-raised">Activate</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

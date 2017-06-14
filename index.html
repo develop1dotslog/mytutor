@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="theme-color" content="#2196f3">
+    <title>My Tutor</title>
+    <link rel="stylesheet" href="css/framework7.material.css">
+    <link rel="stylesheet" href="css/framework7.material.colors.css">
+      <!--<link rel="stylesheet" href="css/framework7.ios.min.css">-->
+      <!-- Path to Framework7 iOS related color styles -->
+      <!--<link rel="stylesheet" href="css/framework7.ios.colors.min.css">-->
+    <!--<link href="http://fonts.googleapis.com/css?family=Roboto:400,300,500,700" rel="stylesheet" type="text/css">-->
+    <link rel="stylesheet" href="css/material-icons.css">
+    <link rel="stylesheet" href="css/kitchen-sink.css">
+    <link rel="stylesheet" href="css/my-app.css">
+
+    <link rel="icon" href="icon.png">
+      <style>.col-25{padding:5px;text-align:center;}.col-dark{background:#222;}</style>
+  </head>
+  <body>
+    <div class="statusbar-overlay"></div>
+    <div class="panel-overlay"></div>
+    <div class="panel panel-left panel-cover">
+      <div class="view navbar-fixed">
+        <div class="pages">
+          <div data-page="panel-left" class="page">
+            <div class="navbar">
+              <div class="navbar-inner">
+                <div class="center">Menu</div>
+              </div>
+            </div>
+            <div class="page-content">
+              <div class="list-block">
+                <ul>
+                    <li>
+                        <a href="index.html" class="item-link close-panel">
+                            <div class="item-content">
+                                <div class="item-media"><i class="material-icons">home</i></div>
+                                <div class="item-inner">
+                                    <div class="item-title">Home</div>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="search.html" class="item-link close-panel">
+                            <div class="item-content">
+                                <div class="item-media"><i class="material-icons">search</i></div>
+                                <div class="item-inner">
+                                    <div class="item-title">Search</div>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="contact.html" class="item-link close-panel">
+                            <div class="item-content">
+                                <div class="item-media"><i class="material-icons">mail</i></div>
+                                <div class="item-inner">
+                                    <div class="item-title">Contact</div>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    <li id="signup">
+                        <a href="signup.html" class="item-link close-panel">
+                            <div class="item-content">
+                                <div class="item-media"><i class="material-icons">person<sup>add</sup></i></div>
+                                <div class="item-inner">
+                                    <div class="item-title">Sign up</div>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+
+                    <li id="login">
+                        <a href="signin.html" class="item-link close-panel">
+                            <div class="item-content">
+                                <div class="item-media"><i class="material-icons">person</i></div>
+                                <div class="item-inner">
+                                    <div class="item-title">Sign in</div>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+
+                    <li id="logout">
+                        <a href="index.html" class="item-link close-panel" id="log_out">
+                            <div class="item-content">
+                                <div class="item-media"><i class="material-icons">person</i></div>
+                                <div class="item-inner">
+                                    <div class="item-title">Log out</div>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+
+                    <li id="membership">
+                        <a href="membership.html" class="item-link close-panel">
+                            <div class="item-content">
+                                <div class="item-media"><i class="material-icons">people</i></div>
+                                <div class="item-inner">
+                                    <div class="item-title">Membership</div>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="views">
+        <!-- Your main view, should have "view-main" class -->
+        <div class="view view-main">
+        <div class="pages navbar-fixed">
+          <div data-page="index" class="page">
+            <div class="navbar">
+              <div class="navbar-inner">
+                  <div class="center">My Tutor</div>
+                  <div class="right"><a href="inbox.html" onclick="mailSignin(this)" class=" link icon-only"><i class="material-icons">mail</i></a></div>
+                  <div class=""><a href="#" class="open-panel link icon-only"><i class="icon icon-bars"></i></a></div>
+              </div>
+            </div>
+            <div class="page-content">
+                <div class="content-block">
+                    <div class="content-block-title">Quick Search..</div>
+                    <div class="list-block">
+                        <ul>
+                            <!-- Select -->
+                            <li>
+                                <div class="item-content">
+                                    <div class="item-inner">
+                                        <div class="item-input">
+                                            <select class="user_type">
+                                                <option class="select-title" value="">Please Select</option>
+                                                <option class="select-title" value="1">Student</option>
+                                                <option class="select-title" value="2">Tutor</option>
+                                                <option class="select-title" value="3">Institute</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <!-- Select -->
+                            <li>
+                                <div class="item-content">
+                                    <div class="item-inner">
+                                        <div class="item-input">
+                                            <select class="city">
+                                                <option class="select-title" value="">Select City</option>
+                                                <option value="1">Abu Dhabi</option>
+                                                <option value="2">Ajman</option>
+                                                <option value="3">Al Ain</option>
+                                                <option value="4">Dubai</option>
+                                                <option value="5">Ras Al Khaima</option>
+                                                <option value="6">Sharjah</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+
+                        </ul>
+
+                        <a href="#"  class="search_btn button button-raised demo-alert">Search</a>
+
+                    </div>
+                    <div class="row search">
+                        <div class="col-33">
+                            <a href="search-student.html">
+                                <img src="img/avatar/student.png" />
+                                <h4>Students</h4>
+                            </a>
+                        </div>
+                        <div class="col-33">
+                            <a href="search-tutor.html">
+                                <img src="img/avatar/tutor.png" />
+                                <h4>Tutors</h4>
+                            </a>
+                        </div>
+                        <div class="col-33">
+                            <a href="search-institute.html">
+                                <img src="img/avatar/institute.png" />
+                                <h4>Institutes</h4>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+              <div class="popup popup-search">
+                  <div class="content-block-title">Search by..</div>
+                  <div class="list-block">
+                      <ul>
+                          <!-- Select -->
+                          <li>
+                              <div class="item-content">
+                                  <div class="item-inner">
+                                      <div class="item-input">
+                                          <select class="user_type">
+                                              <option class="select-title" value="">Please Select</option>
+                                              <option class="select-title" value="1">Student</option>
+                                              <option class="select-title" value="2">Tutor</option>
+                                              <option class="select-title" value="3">Institute</option>
+                                          </select>
+                                      </div>
+                                  </div>
+                              </div>
+                          </li>
+
+                          <!-- Select -->
+                          <li>
+                              <div class="item-content">
+                                  <div class="item-inner">
+                                      <div class="item-input">
+                                          <select class="city">
+                                              <option class="select-title" value="">Select City</option>
+                                              <option value="1">Abu Dhabi</option>
+                                              <option value="2">Ajman</option>
+                                              <option value="3">Al Ain</option>
+                                              <option value="4">Dubai</option>
+                                              <option value="5">Ras Al Khaima</option>
+                                              <option value="6">Sharjah</option>
+                                              
+                                          </select>
+                                      </div>
+                                  </div>
+                              </div>
+                          </li>
+
+                      </ul>
+
+                      <a href="#" class="search_btn button button-raised demo-alert">Search</a>
+                      <div class="col-25">
+                          Blue<br>
+                          <span class="preloader preloader-blue"></span>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript" src="js/framework7.js"></script>
+
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/pusher.min.js"></script>
+    <script type="text/javascript" src="js/my-app.js"></script>
+
+  </body>
+</html>
