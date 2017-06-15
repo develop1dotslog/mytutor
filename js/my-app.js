@@ -137,9 +137,13 @@ $$(document).on('pageInit', function (e) {
             var email = $('#email').val();
             var contact_no = $('#contact_no').val();
             var message = $('#message').val();
-
+            myApp.showPreloader();
             $.post('http://dotslog.com/talent/public/api/contact',{name:name,email:email,contact_no:contact_no,message:message},function (data) {
+                myApp.hidePreloader();
+               //console.log(data);
                 myApp.alert("Message Sent!! You will be contacted soon",'Alert!');
+                mainView.router.loadPage('index.html');
+
             })
         });
 
