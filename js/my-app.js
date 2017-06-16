@@ -16,37 +16,49 @@ var mainView = myApp.addView('.view-main', {
 });
 
 
-$('.search_btn').on('click',function () {
-
+$('.search_btn').on('click',function (event) {
     var user_type = $('.user_type').val();
     //    var subject = $('.subject').val();
     //    var category =  $('.category').val();
     var city =  $('.city').val();
+    var area =  $('.area').val();
 
-    window.localStorage.setItem('user_type',user_type);
-    window.localStorage.setItem('city',city);
-    //  window.localStorage.setItem('category',category);
-    //  window.localStorage.setItem('subject',subject);
-    myApp.closeModal();
-    mainView.router.loadPage('search-result.html');
+    if(city !== "" && user_type !== "" && area !== ""){
+        window.localStorage.setItem('user_type',user_type);
+        window.localStorage.setItem('city',city);
+        window.localStorage.setItem('area',area);
+        //  window.localStorage.setItem('category',category);
+        //  window.localStorage.setItem('subject',subject);
+        myApp.closeModal();
+        mainView.router.loadPage('search-result.html');
+    }else{
+        myApp.alert("You must fill all fields",'Alert!!')
+    }
 });
+
 
 $$('.popup-search').on('popup:open', function () {
 
 
-    $('.search_btn').on('click',function () {
+    $('.search_btn').on('click',function (event) {
 
         var user_type = $('.user_type').val();
         //    var subject = $('.subject').val();
         //    var category =  $('.category').val();
         var city =  $('.city').val();
+        var area =  $('.area').val();
 
-        window.localStorage.setItem('user_type',user_type);
-        window.localStorage.setItem('city',city);
-        //  window.localStorage.setItem('category',category);
-        //  window.localStorage.setItem('subject',subject);
-        myApp.closeModal();
-        mainView.router.loadPage('search-result.html');
+        if(city !== "" && user_type !== "" && area !== ""){
+            window.localStorage.setItem('user_type',user_type);
+            window.localStorage.setItem('city',city);
+            window.localStorage.setItem('area',area);
+            //  window.localStorage.setItem('category',category);
+            //  window.localStorage.setItem('subject',subject);
+            myApp.closeModal();
+            mainView.router.loadPage('search-result.html');
+        }else{
+            myApp.alert("You must fill all fields",'Alert!!')
+        }
     });
 });
 
@@ -96,9 +108,6 @@ $$(document).on('pageInit', function (e) {
             }
         });
 
-
-
-
     }
 
     if (page.name === 'contact') {
@@ -128,19 +137,23 @@ $$(document).on('pageInit', function (e) {
         //  var subject = window.localStorage.getItem('subject');
         //   var category =   window.localStorage.getItem('category');
         var city =   window.localStorage.getItem('city');
+        var area =   window.localStorage.getItem('area');
         var name = "";
         myApp.showPreloader();
-        $.post('http://dotslog.com/talent/public/api/search',{user_type:user_type,city:city},function (data) {
+        $.post('http://dotslog.com/talent/public/api/search',{user_type:user_type,city:city,area:area},function (data) {
 
             console.log(data);
             window.localStorage.removeItem('user_type');
             //  window.localStorage.removeItem('subject');
             //    window.localStorage.removeItem('category');
             window.localStorage.removeItem('city');
+            window.localStorage.removeItem('area');
             myApp.hidePreloader();
 
-            if(data.flag == 0){
-                $('#no_result').show();
+            if(data.flag == 1){
+                $('.no_result').show();
+            }else{
+                $('.no_result').hide();
             }
 
             $.each(data.user,function (key,value) {
@@ -242,7 +255,7 @@ $$(document).on('pageInit', function (e) {
                     }else{
 
                         myApp.alert(data,'Alert!');
-                        mainView.router.loadPage('login.html');
+                        mainView.router.loadPage('signin.html');
                     }
 
                 });
@@ -291,9 +304,8 @@ $$(document).on('pageInit', function (e) {
                     if(data == 'Email already taken.'){
                         myApp.alert(data,'Alert!');
                     }else{
-
                         myApp.alert(data,'Alert!');
-                        mainView.router.loadPage('login.html');
+                        mainView.router.loadPage('signin.html');
 
                     }
 
@@ -343,7 +355,7 @@ $$(document).on('pageInit', function (e) {
                     }else{
 
                         myApp.alert(data,'Alert!');
-                        mainView.router.loadPage('login.html');
+                        mainView.router.loadPage('signin.html');
                     }
 
                 });
