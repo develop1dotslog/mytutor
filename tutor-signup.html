@@ -75,14 +75,15 @@
                         <div class="item-inner">
                             <div class="item-title label">Select City</div>
                             <div class="item-input">
-                                <select id="city_id" class="city" required>
+                                <select id="city" class="city" required onchange="areaGiver(this.options[this.selectedIndex].value)">
                                     <option value="">Select City</option>
-                                    <option value="1">Abu Dhabi</option>
-                                    <option value="2">Ajman</option>
-                                    <option value="3">Al Ain</option>
-                                    <option value="4">Dubai</option>
-                                    <option value="5">Ras Al Khaima</option>
-                                    <option value="6">Sharjah</option>
+                                    <option value="Abu Dhabi">Abu Dhabi</option>
+                                    <option value="Ajman">Ajman</option>
+                                    <option value="Dubai">Dubai</option>
+                                    <option value="Ras Al Khaima">Ras Al Khaima</option>
+                                    <option value="Sharjah">Sharjah</option>
+                                    <option value="Fujairah">Fujairah</option>
+                                    <option value="Umm al Qwain">Umm al Qwain</option>
                                 </select>
                             </div>
                         </div>
@@ -93,7 +94,7 @@
                         <div class="item-inner">
                             <div class="item-title label">Select Area</div>
                             <div class="item-input">
-                                <select id="area_id" required class="area">
+                                <select id="area" required class="area">
                                     <option value="" >Select Area</option>
                                 </select>
                             </div>

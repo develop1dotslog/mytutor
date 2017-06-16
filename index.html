@@ -111,6 +111,8 @@
                     </li>
                 </ul>
               </div>
+
+
             </div>
           </div>
         </div>
@@ -154,14 +156,28 @@
                                 <div class="item-content">
                                     <div class="item-inner">
                                         <div class="item-input">
-                                            <select class="city" required>
-                                                <option class="select-title" value="">Select City</option>
-                                                <option value="1">Abu Dhabi</option>
-                                                <option value="2">Ajman</option>
-                                                <option value="3">Al Ain</option>
-                                                <option value="4">Dubai</option>
-                                                <option value="5">Ras Al Khaima</option>
-                                                <option value="6">Sharjah</option>
+                                            <select class="city" required onchange="areaGiver(this.options[this.selectedIndex].value)">
+                                                <option class="select-title" value="" >Select City</option>
+                                                <option value="Abu Dhabi">Abu Dhabi</option>
+                                                <option value="Ajman">Ajman</option>
+                                                <option value="Dubai">Dubai</option>
+                                                <option value="Ras Al Khaima">Ras Al Khaima</option>
+                                                <option value="Sharjah">Sharjah</option>
+                                                <option value="Fujairah">Fujairah</option>
+                                                <option value="Umm al Qwain">Umm al Qwain</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <!-- Select -->
+                            <li>
+                                <div class="item-content">
+                                    <div class="item-inner">
+                                        <div class="item-input">
+                                            <select class="area" id="area" required>
+                                                <option class="select-title" value="">Select Area</option>
                                             </select>
                                         </div>
                                     </div>
@@ -193,6 +209,7 @@
                             </a>
                         </div>
                     </div>
+                    <!--<button id="test" onclick="test()">test me</button>-->
                 </div>
             </div>
 
@@ -221,15 +238,28 @@
                               <div class="item-content">
                                   <div class="item-inner">
                                       <div class="item-input">
-                                          <select class="city" required>
-                                              <option class="select-title" value="">Select City</option>
-                                              <option value="1">Abu Dhabi</option>
-                                              <option value="2">Ajman</option>
-                                              <option value="3">Al Ain</option>
-                                              <option value="4">Dubai</option>
-                                              <option value="5">Ras Al Khaima</option>
-                                              <option value="6">Sharjah</option>
-                                              
+                                          <select class="city" required onchange="areaGiver(this.options[this.selectedIndex].value)">
+                                              <option class="select-title" value="" >Select City</option>
+                                              <option value="Abu Dhabi">Abu Dhabi</option>
+                                              <option value="Ajman">Ajman</option>
+                                              <option value="Dubai">Dubai</option>
+                                              <option value="Ras Al Khaima">Ras Al Khaima</option>
+                                              <option value="Sharjah">Sharjah</option>
+                                              <option value="Fujairah">Fujairah</option>
+                                              <option value="Umm al Qwain">Umm al Qwain</option>
+                                          </select>
+                                      </div>
+                                  </div>
+                              </div>
+                          </li>
+
+                          <!-- Select -->
+                          <li>
+                              <div class="item-content">
+                                  <div class="item-inner">
+                                      <div class="item-input">
+                                          <select class="area" id="area" required>
+                                              <option class="select-title" value="">Select Area</option>
                                           </select>
                                       </div>
                                   </div>
