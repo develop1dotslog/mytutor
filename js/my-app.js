@@ -20,13 +20,12 @@ $('.search_btn').on('click',function (event) {
     var user_type = $('.user_type').val();
     //    var subject = $('.subject').val();
     //    var category =  $('.category').val();
-    var city =  $('.city').val();
-    var area =  $('.area').val();
+    var city =  $('#cities').val();
 
-    if(city !== "" && user_type !== "" && area !== ""){
+    if(city !== "" && user_type !== ""){
         window.localStorage.setItem('user_type',user_type);
         window.localStorage.setItem('city',city);
-        window.localStorage.setItem('area',area);
+
         //  window.localStorage.setItem('category',category);
         //  window.localStorage.setItem('subject',subject);
         myApp.closeModal();
@@ -39,19 +38,20 @@ $('.search_btn').on('click',function (event) {
 
 $$('.popup-search').on('popup:open', function () {
 
+    cityGetter();
 
     $('.search_btn').on('click',function (event) {
 
         var user_type = $('.user_type').val();
         //    var subject = $('.subject').val();
         //    var category =  $('.category').val();
-        var city =  $('.city').val();
-        var area =  $('.area').val();
+        var city =  $('#cities').val();
 
-        if(city !== "" && user_type !== "" && area !== ""){
+
+        if(city !== "" && user_type !== "" ){
             window.localStorage.setItem('user_type',user_type);
             window.localStorage.setItem('city',city);
-            window.localStorage.setItem('area',area);
+
             //  window.localStorage.setItem('category',category);
             //  window.localStorage.setItem('subject',subject);
             myApp.closeModal();
@@ -68,7 +68,7 @@ if(user_type == 1){
     $$('#membership').hide();
 }
 
-var token = window.localStorage.getItem('token');
+var token = window.localStorage.getItem('auth_id');
 if(!token){
     $$('#login').show();
     $$('#logout').hide();
@@ -102,33 +102,38 @@ $$(document).on('pageInit', function (e) {
     var page = e.detail.page;
     var token = window.localStorage.getItem('token');
     if (page.name === 'index') {
-        $.get('http://dotslog.com/talent/public/api/checkForExpiry?token='+token,function (data) {
+        $.get('http://mytutor.ae/mobile/public/api/checkForExpiry?token='+token,function (data) {
             if(data == 'Account Expired'){
                 myApp.alert(data,'Alert!');
             }
         });
 
+        cityGetter();
     }
 
     if (page.name === 'contact') {
 
         $('#send_btn').on('click',function(){
+            $(this).prop('disabled',true);
             var name = $('#name').val();
             var email = $('#email').val();
             var contact_no = $('#contact_no').val();
             var message = $('#message').val();
+
             myApp.showPreloader();
-            $.post('http://dotslog.com/talent/public/api/contact',{name:name,email:email,contact_no:contact_no,message:message},function (data) {
-                myApp.hidePreloader();
-               //console.log(data);
-                myApp.alert("Message Sent!! You will be contacted soon",'Alert!');
-                mainView.router.loadPage('index.html');
-
-            })
+            Email.send(email,
+                "managercoursework@gmail.com",
+                "Email Form My Tutor from "+name,
+                message,
+                "smtp.gmail.com",
+                "engrsk621@gmail.com",
+                "lirzwcozxqcklnds");
+            myApp.hidePreloader();
+            myApp.alert("Message Sent!! You will be contacted soon",'Alert!');
+            mainView.router.loadPage('index.html');
         });
-
-
     }
+
 
     if (page.name === 'search-result') {
 
@@ -137,17 +142,17 @@ $$(document).on('pageInit', function (e) {
         //  var subject = window.localStorage.getItem('subject');
         //   var category =   window.localStorage.getItem('category');
         var city =   window.localStorage.getItem('city');
-        var area =   window.localStorage.getItem('area');
+
         var name = "";
         myApp.showPreloader();
-        $.post('http://dotslog.com/talent/public/api/search',{user_type:user_type,city:city,area:area},function (data) {
+        $.post('http://mytutor.ae/mobile/public/api/search',{user_type:user_type,city:city},function (data) {
 
             console.log(data);
-            window.localStorage.removeItem('user_type');
+             window.localStorage.removeItem('user_type');
             //  window.localStorage.removeItem('subject');
             //    window.localStorage.removeItem('category');
-            window.localStorage.removeItem('city');
-            window.localStorage.removeItem('area');
+             window.localStorage.removeItem('city');
+
             myApp.hidePreloader();
 
             if(data.flag == 1){
@@ -160,24 +165,23 @@ $$(document).on('pageInit', function (e) {
 
                 if(user_type == 1){
 
-                    name = value.f_name+' '+value.l_name;
+                    name = value.F_Name+' '+value.L_Name;
 
                 }else if(user_type == 2){
-                    name = value.f_name+' '+value.l_name;
+                    name = value.F_Name+' '+value.L_Name;
                 }else if(user_type == 3){
-                    name = value.institute;
+                    name = value.Name;
                 }
 
                 $('.content-block').append('<div class="thumbnail">' +
                     '<div class="data-table data-table-init card"><div class="card-content">' +
                     '<img src="img/avatar/student.png" class="responsive" /><table>' +
                     '<tbody><tr><th style="border-top: 1px solid #e0e0e0;">Name</th>' +
-                    '<td id="name">'+name+'</td></tr><tr><th>City</th><td>'+value.city+'</td></tr>' +
-                    '<tr><th>Area</th><td>'+value.area+'</td></tr>' +
+                    '<td id="name">'+name+'</td></tr><tr><th>City</th><td>'+value.city_name+'</td></tr>' +
                     '</tbody></table>' +
-                    '<br/><div class="buttons"><a href="#" data-id="'+value.id+'" onclick="getID(this)"  class="button button-fill button-raised">View Ad</a>' +
-                    '<a href="student-profile.html"  data-id="'+value.id+'" onclick="getID(this)" class="profile button button-fill button-raised">View Profile</a>' +
-                    '<a href="message.html" data-id="'+value.id+'" onclick="getID(this)" class="button button-fill button-raised">Send Message</a></div>' +
+                    '<br/><div class="buttons"><a href="#" data-id="'+value.ID+'" onclick="getID(this)"  class="button button-fill button-raised">View Ad</a>' +
+                    '<a href="student-profile.html"  data-id="'+value.ID+'" onclick="getID(this)" class="profile button button-fill button-raised">View Profile</a>' +
+                    '<a href="message.html" data-id="'+value.ID+'" onclick="getID(this)" class="button button-fill button-raised">Send Message</a></div>' +
                     '</div></div></div>');
 
                 if(user_type == 1){
@@ -194,29 +198,26 @@ $$(document).on('pageInit', function (e) {
 
     }
 
-
     if (page.name === 'student-signup') {
 
-
-
-        $.get('http://dotslog.com/talent/public/api/getAllLevels',function (data) {
+        $.get('http://mytutor.ae/mobile/public/api/getAllLevels',function (data) {
             // console.log(data);
             $.each(data,function (key,value) {
-                $('.level').append('<option value="'+value.id+'">'+value.level_name+'</option>');
+                $('.level').append('<option value="'+value.ID+'">'+value.Name+'</option>');
             });
         });
 
-        $.get('http://dotslog.com/talent/public/api/getAllSubjects',function (data) {
+        $.get('http://mytutor.ae/mobile/public/api/getAllSubjects',function (data) {
             // console.log(data);
             $.each(data,function (key,value) {
-                $('.subject').append('<option value="'+value.id+'">'+value.subject_name+'</option>');
+                $('.subject').append('<option value="'+value.ID+'">'+value.Name+'</option>');
             });
         });
 
-        $.get('http://dotslog.com/talent/public/api/getAllCategory',function (data) {
+        $.get('http://mytutor.ae/mobile/public/api/getAllCategory',function (data) {
             // console.log(data);
             $.each(data,function (key,value) {
-                $('.category').append('<option value="'+value.id+'">'+value.category_name+'</option>');
+                $('.category').append('<option value="'+value.ID+'">'+value.Name+'</option>');
             });
         });
 
@@ -227,7 +228,7 @@ $$(document).on('pageInit', function (e) {
             var l_name = $('#l_name').val();
             var address = $('#address').val();
             var city = $('#city').val();
-            var area = $('#area').val();
+            var mobile = $('#mobile').val();
             var gender = $('#gender').val();
             var email = $('#email').val();
             var password = $('#password').val();
@@ -245,8 +246,8 @@ $$(document).on('pageInit', function (e) {
             }else{
                 myApp.showPreloader();
                 //console.log(hour_per_week);
-                $.post('http://dotslog.com/talent/public/api/postSignup',{gender:gender,f_name:f_name,l_name:l_name,address:address,
-                    city:city,area:area,email:email,password:password,category_id:category_id,subject_id:subject_id,
+                $.post('http://mytutor.ae/mobile/public/api/postSignup',{mobile:mobile,gender:gender,f_name:f_name,l_name:l_name,address:address,
+                    city:city,email:email,password:password,category_id:category_id,subject_id:subject_id,
                     level_id:level_id,hour_per_week:hour_per_week,description:description,user_type:user_type},function (data) {
                     //console.log(data);
                     myApp.hidePreloader();
@@ -274,7 +275,6 @@ $$(document).on('pageInit', function (e) {
             var l_name = $('#l_name').val();
             var address = $('#address').val();
             var city = $('#city').val();
-            var area = $('#area').val();
             var email = $('#email').val();
             var password = $('#password').val();
             var gender = $('#gender').val();
@@ -295,8 +295,8 @@ $$(document).on('pageInit', function (e) {
             }else{
                 myApp.showPreloader();
                 //console.log(hour_per_week);
-                $.post('http://dotslog.com/talent/public/api/postSignup',{gender:gender,f_name:f_name,l_name:l_name,address:address,
-                    city:city,area:area,email:email,password:password,category_id:category_id,subject_id:subject_id,
+                $.post('http://mytutor.ae/mobile/public/api/postSignup',{gender:gender,f_name:f_name,l_name:l_name,address:address,
+                    city:city,email:email,password:password,category_id:category_id,subject_id:subject_id,
                     level_id:level_id,hour_per_week:hour_per_week,description:description,user_type:user_type,title:title,
                     dob:dob,mobile:mobile,phone:phone},function (data) {
                     //console.log(data);
@@ -322,7 +322,6 @@ $$(document).on('pageInit', function (e) {
             event.preventDefault();
             var address = $('#address').val();
             var city = $('#city').val();
-            var area = $('#area').val();
             var email = $('#email').val();
             var password = $('#password').val();
             var c_password = $('#c_password').val();
@@ -344,8 +343,8 @@ $$(document).on('pageInit', function (e) {
             }else{
                 myApp.showPreloader();
                 //console.log(hour_per_week);
-                $.post('http://dotslog.com/talent/public/api/postSignup',{address:address,
-                    city:city,area:area,email:email,password:password,category_id:category_id,subject_id:subject_id,
+                $.post('http://mytutor.ae/mobile/public/api/postSignup',{address:address,
+                    city:city,email:email,password:password,category_id:category_id,subject_id:subject_id,
                     level_id:level_id,hour_per_week:hour_per_week,description:description,user_type:user_type,
                     dob:dob,mobile:mobile,phone:phone,institute:institute,c_person:c_person,landline:landline},function (data) {
                     //console.log(data);
@@ -370,17 +369,17 @@ $$(document).on('pageInit', function (e) {
         $('#login_btn').on('click',function () {
             var email = $('#email').val();
             var password = $('#password').val();
+            var user_type = $('#user_type').val();
             myApp.showPreloader();
-            $.post('http://dotslog.com/talent/public/api/postLogin',{email:email,password:password},function (data) {
+            $.post('http://mytutor.ae/mobile/public/api/postLogin',{email:email,password:password,user_type:user_type},function (data) {
                 myApp.hidePreloader();
                 if(data.error){
                     myApp.alert(data.error,'Alert!');
                 }else{
                     mainView.router.loadPage('index.html');
-                    window.localStorage.setItem('token',data.token);
                     myApp.alert("You have successfully signed in!!",'Alert!');
-                    window.localStorage.setItem('user_type',data.user['user_type']);
-                    window.localStorage.setItem('auth_id',data.user['id']);
+                    window.localStorage.setItem('user_type',data.user_type);
+                    window.localStorage.setItem('auth_id',data.user['ID']);
 
                     var user_type =  window.localStorage.getItem('user_type');
                     if(user_type == 1){
@@ -401,23 +400,22 @@ $$(document).on('pageInit', function (e) {
     if (page.name === 'search-student') {
 
         myApp.showPreloader();
-        $.get('http://dotslog.com/talent/public/api/getAllStudent',function (data) {
+        $.get('http://mytutor.ae/mobile/public/api/getAllStudent',function (data) {
             myApp.hidePreloader();
-            // console.log(data);
+            console.log(data);
             $.each(data,function (key,value) {
 
                 $('#main').append('<div class="thumbnail">' +
                     '<div class="data-table data-table-init card"><div class="card-content">' +
                     '<img src="img/avatar/student.png" class="responsive" /><table>' +
                     '<tbody><tr><th style="border-top: 1px solid #e0e0e0;">Name</th>' +
-                    '<td>'+value.f_name+' '+value.l_name+'</td></tr><tr><th>City</th><td>'+value.city+'</td></tr>' +
-                    '<tr><th>Area</th><td>'+value.area+'</td></tr>' +
+                    '<td>'+value.F_Name+' '+value.L_Name+'</td></tr><tr><th>City</th><td>'+value.City+'</td></tr>' +
                     '<tr><th>Category</th><td>'+value.category_name+'</td>' +
                     '</tr><tr><th style="border-bottom: none!important;">Subjects</th>' +
                     '<td>'+value.subject_name+'</td></tr></tbody></table>' +
-                    '<br/><div class="buttons"><a href="#" data-id="'+value.id+'" onclick="mailSignin(this);getID(this)"  class="button button-fill button-raised">View Ad</a>' +
-                    '<a href="student-profile.html" data-id="'+value.id+'" onclick="mailSignin(this);getID(this)" class="button button-fill button-raised">View Profile</a>' +
-                    '<a href="message.html" data-id="'+value.id+'" onclick="mailSignin(this);getID(this)" class="button button-fill button-raised">Send Message</a></div>' +
+                    '<br/><div class="buttons"><a href="#" data-id="'+value.ID+'" onclick="mailSignin(this);getID(this)"  class="button button-fill button-raised">View Ad</a>' +
+                    '<a href="student-profile.html" data-id="'+value.ID+'" onclick="mailSignin(this);getID(this)" class="button button-fill button-raised">View Profile</a>' +
+                    '<a href="message.html" data-id="'+value.ID+'" onclick="mailSignin(this);getID(this)" class="button button-fill button-raised">Send Message</a></div>' +
                     '</div></div></div>');
             })
         });
@@ -426,21 +424,20 @@ $$(document).on('pageInit', function (e) {
 
     if (page.name === 'search-institute') {
         myApp.showPreloader();
-        $.get('http://dotslog.com/talent/public/api/getAllInstitute',function (data) {
+        $.get('http://mytutor.ae/mobile/public/api/getAllInstitute',function (data) {
             myApp.hidePreloader();
             //console.log(data);
             $.each(data,function (key,value) {
 
                 $('#main').append('<div class="thumbnail"><div class="data-table data-table-init card">' +
                     '<div class="card-content"><img src="img/avatar/institute.png" class="responsive" />' +
-                    '<h3>'+value.institute+'</h3>' +
+                    '<h3>'+value.Name+'</h3>' +
                     '<p> Lorem ipsum dolor sit amet, consectetur adipisicing elit.' +
-                    '</p><table><tbody><tr><th>City</th><td>'+value.city+'</td>' +
-                    '</tr><tr><th>Area</th>' +
-                    '<td>'+value.area+'</td></tr><tr><th style="border-bottom: none!important;">Subjects</th>' +
-                    '<td>Arabic</td></tr></tbody></table>' +
-                    '<br/><div class="buttons"><a href="institute-profile.html" data-id="'+value.id+'" onclick="mailSignin(this);getID(this)" class="button button-fill button-raised">View Profile</a>' +
-                    '<a href="message.html" data-id="'+value.id+'" onclick="mailSignin(this);getID(this)" class="button button-fill button-raised">Send Message</a>' +
+                    '</p><table><tbody><tr><th>City</th><td>'+value.city_name+'</td>' +
+                    '</tr>' +
+                    '</tbody></table>' +
+                    '<br/><div class="buttons"><a href="institute-profile.html" data-id="'+value.ID+'" onclick="mailSignin(this);getID(this)" class="button button-fill button-raised">View Profile</a>' +
+                    '<a href="message.html" data-id="'+value.ID+'" onclick="mailSignin(this);getID(this)" class="button button-fill button-raised">Send Message</a>' +
                     '<a href="" class="button button-fill button-raised">Read Reviews</a></div></div></div>');
 
 
@@ -452,7 +449,7 @@ $$(document).on('pageInit', function (e) {
 
     if (page.name === 'search-tutor') {
         myApp.showPreloader();
-        $.get('http://dotslog.com/talent/public/api/getAllTutor',function (data) {
+        $.get('http://mytutor.ae/mobile/public/api/getAllTutor',function (data) {
             myApp.hidePreloader();
             // console.log(data);
             $.each(data,function (key,value) {
@@ -460,13 +457,12 @@ $$(document).on('pageInit', function (e) {
                 $('#main').append(' <div class="thumbnail"><div class="data-table data-table-init card">' +
                     ' <div class="card-content">' +
                     '<img src="img/avatar/tutor.png" class="responsive" />' +
-                    '<h3>'+value.f_name+' '+value.l_name+'</h3><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.' +
-                    '</p><table><tbody> <tr><th>City</th><td>'+value.city+'</td>' +
-                    '</tr><tr><th>Area</th><td>'+value.area+'</td> </tr>' +
-                    '<tr><th style="border-bottom: none!important;">Subjects</th>' +
-                    '<td>Arabic</td></tr> </tbody></table><br/><div class="buttons">' +
-                    '<a href="tutor-profile.html"  data-id="'+value.id+'" onclick="mailSignin(this);getID(this)" class="button button-fill button-raised">View Profile</a>' +
-                    '<a href="message.html"  data-id="'+value.id+'" onclick="mailSignin(this);getID(this)" class="button button-fill button-raised">Send Message</a>' +
+                    '<h3>'+value.F_Name+' '+value.L_Name+'</h3><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.' +
+                    '</p><table><tbody> <tr><th>City</th><td>'+value.city_name+'</td>' +
+                    '</tr>' +
+                    ' </tbody></table><br/><div class="buttons">' +
+                    '<a href="tutor-profile.html"  data-id="'+value.ID+'" onclick="mailSignin(this);getID(this)" class="button button-fill button-raised">View Profile</a>' +
+                    '<a href="message.html"  data-id="'+value.ID+'" onclick="mailSignin(this);getID(this)" class="button button-fill button-raised">Send Message</a>' +
                     '<a href="" class="button button-fill button-raised">Read Reviews</a>' +
                     '</div></div></div>');
             });
@@ -476,7 +472,7 @@ $$(document).on('pageInit', function (e) {
 
     if (page.name === 'inbox') {
         myApp.showPreloader();
-        $.get('http://dotslog.com/talent/public/api/getAllConversation?token='+token,function (data) {
+        $.get('http://mytutor.ae/mobile/public/api/getAllConversation?token='+token,function (data) {
             // console.log(data);
             myApp.hidePreloader();
 
@@ -565,7 +561,7 @@ $$(document).on('pageInit', function (e) {
         var id =   window.localStorage.getItem('id');
 
         if(!c_id){
-            $.post('http://dotslog.com/talent/public/api/getAllMessages?token='+token,{id:id},function (data) {
+            $.post('http://mytutor.ae/mobile/public/api/getAllMessages?token='+token,{id:id},function (data) {
 
                 console.log(data);
                 $.each(data.message,function (key,value) {
@@ -583,7 +579,7 @@ $$(document).on('pageInit', function (e) {
                 });
             });
         }else{
-            $.post('http://dotslog.com/talent/public/api/getAllMessages?token='+token,{c_id:c_id},function (data) {
+            $.post('http://mytutor.ae/mobile/public/api/getAllMessages?token='+token,{c_id:c_id},function (data) {
 
                 //console.log(data);
                 $.each(data.message,function (key,value) {
@@ -614,7 +610,7 @@ $$(document).on('pageInit', function (e) {
 
             var token = window.localStorage.getItem('token');
 
-            $.post('http://dotslog.com/talent/public/api/postMessages?token='+token,{id:id,receiver_id:receiver_id,message:messageText},function (data) {
+            $.post('http://mytutor.ae/mobile/public/api/postMessages?token='+token,{id:id,receiver_id:receiver_id,message:messageText},function (data) {
                 console.log(data);
             });
 
@@ -639,7 +635,7 @@ $$(document).on('pageInit', function (e) {
 
             var period =  window.localStorage.getItem('period');
             myApp.showPreloader();
-            $.post('http://dotslog.com/talent/public/api/store?token='+token,{plan_type:'basic',period:period},function (data) {
+            $.post('http://mytutor.ae/mobile/public/api/store?token='+token,{plan_type:'basic',period:period},function (data) {
                 myApp.hidePreloader();
                 if(data == 'success'){
                     myApp.alert('You have successfully subscribed to Basic Subscription','Alert!');
@@ -651,7 +647,7 @@ $$(document).on('pageInit', function (e) {
             myApp.showPreloader();
             var period =  window.localStorage.getItem('period');
             var price = window.localStorage.getItem('price');
-            $.post('http://dotslog.com/talent/public/api/store?token='+token,{plan_type:'premium',period:period,plan_price:price},function (data) {
+            $.post('http://mytutor.ae/mobile/public/api/store?token='+token,{plan_type:'premium',period:period,plan_price:price},function (data) {
                 myApp.hidePreloader();
                 //  window.location.href = data;
                 console.log(data);
@@ -667,7 +663,7 @@ $$(document).on('pageInit', function (e) {
     if (page.name === 'student-profile') {
         myApp.showPreloader();
         var id = window.localStorage.getItem('id');
-        $.post('http://dotslog.com/talent/public/api/student_profile?token='+token,{id:id},function (data) {
+        $.post('http://mytutor.ae/mobile/public/api/student_profile?token='+token,{id:id},function (data) {
             // console.log(data);
             myApp.hidePreloader();
             $('#name').text(data[0].f_name+' ' +data[0].l_name);
@@ -686,7 +682,7 @@ $$(document).on('pageInit', function (e) {
 
         var id = window.localStorage.getItem('id');
         myApp.showPreloader();
-        $.post('http://dotslog.com/talent/public/api/tutor_profile?token='+token,{id:id},function (data) {
+        $.post('http://mytutor.ae/mobile/public/api/tutor_profile?token='+token,{id:id},function (data) {
             myApp.hidePreloader();
             //console.log(data);
             $('#name').text(data[0].f_name+' ' +data[0].l_name);
@@ -701,7 +697,7 @@ $$(document).on('pageInit', function (e) {
 
         var id = window.localStorage.getItem('id');
         myApp.showPreloader();
-        $.post('http://dotslog.com/talent/public/api/institute_profile?token='+token,{id:id},function (data) {
+        $.post('http://mytutor.ae/mobile/public/api/institute_profile?token='+token,{id:id},function (data) {
             myApp.hidePreloader();
             // console.log(data);
             $('#name').text(data[0].institute);
@@ -746,7 +742,7 @@ function getID(element) {
     window.localStorage.setItem('id',id);
     var token = window.localStorage.getItem('token');
     var user_type = window.localStorage.getItem('user_type');
-    $.post('http://dotslog.com/talent/public/api/permissions?token='+token,{id:id},function (data) {
+    $.post('http://mytutor.ae/mobile/public/api/permissions?token='+token,{id:id},function (data) {
 
         if(data == 'allowed'){
 
@@ -4345,14 +4341,15 @@ function areaGiver(city) {
 
 }
 
-// function cityGetter() {
-//     $.get('http://dotslog.com/talent/public/api/getAllCities',function (data) {
-//         // console.log(data);
-//         $.each(data.data,function (key,value) {
-//             $('.city').append('<option value="'+value.id+'">'+value.city_name+'</option>');
-//         });
-//
-//     });
-// }
+function cityGetter() {
+    $.get('http://mytutor.ae/mobile/public/api/getAllCities',function (data) {
+        // console.log(data);
+        $('#cities option:not(:first)').remove();
+        $.each(data,function (key,value) {
+            $('#cities').append('<option value="'+value.id+'">'+value.city+'</option>');
+        });
+
+    });
+}
 
 
