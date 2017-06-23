@@ -200,6 +200,8 @@ $$(document).on('pageInit', function (e) {
 
     if (page.name === 'student-signup') {
 
+        cityGetter();
+
         $.get('http://mytutor.ae/mobile/public/api/getAllLevels',function (data) {
             // console.log(data);
             $.each(data,function (key,value) {
@@ -227,7 +229,7 @@ $$(document).on('pageInit', function (e) {
             var f_name = $('#f_name').val();
             var l_name = $('#l_name').val();
             var address = $('#address').val();
-            var city = $('#city').val();
+            var city = $('#cities').val();
             var mobile = $('#mobile').val();
             var gender = $('#gender').val();
             var email = $('#email').val();
@@ -268,13 +270,14 @@ $$(document).on('pageInit', function (e) {
 
     }
     if (page.name === 'tutor-signup') {
+        cityGetter();
 
         $('#signup_btn').on('click',function () {
             event.preventDefault();
             var f_name = $('#f_name').val();
             var l_name = $('#l_name').val();
             var address = $('#address').val();
-            var city = $('#city').val();
+            var city = $('#cities').val();
             var email = $('#email').val();
             var password = $('#password').val();
             var gender = $('#gender').val();
@@ -317,11 +320,11 @@ $$(document).on('pageInit', function (e) {
 
     }
     if (page.name === 'institute-signup') {
-
+        cityGetter();
         $('#signup_btn').on('click',function () {
             event.preventDefault();
             var address = $('#address').val();
-            var city = $('#city').val();
+            var city = $('#cities').val();
             var email = $('#email').val();
             var password = $('#password').val();
             var c_password = $('#c_password').val();
