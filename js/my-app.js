@@ -102,7 +102,7 @@ $$(document).on('pageInit', function (e) {
     var page = e.detail.page;
     var token = window.localStorage.getItem('token');
     if (page.name === 'index') {
-        $.get('http://mytutor.ae/mobile/public/api/checkForExpiry?token='+token,function (data) {
+        $.get('http://mytutor.ae/mobile/public/api/checkForExpiry',function (data) {
             if(data == 'Account Expired'){
                 myApp.alert(data,'Alert!');
             }
@@ -475,7 +475,7 @@ $$(document).on('pageInit', function (e) {
 
     if (page.name === 'inbox') {
         myApp.showPreloader();
-        $.get('http://mytutor.ae/mobile/public/api/getAllConversation?token='+token,function (data) {
+        $.get('http://mytutor.ae/mobile/public/api/getAllConversation',function (data) {
             // console.log(data);
             myApp.hidePreloader();
 
@@ -564,7 +564,7 @@ $$(document).on('pageInit', function (e) {
         var id =   window.localStorage.getItem('id');
 
         if(!c_id){
-            $.post('http://mytutor.ae/mobile/public/api/getAllMessages?token='+token,{id:id},function (data) {
+            $.post('http://mytutor.ae/mobile/public/api/getAllMessages',{id:id},function (data) {
 
                 console.log(data);
                 $.each(data.message,function (key,value) {
@@ -582,7 +582,7 @@ $$(document).on('pageInit', function (e) {
                 });
             });
         }else{
-            $.post('http://mytutor.ae/mobile/public/api/getAllMessages?token='+token,{c_id:c_id},function (data) {
+            $.post('http://mytutor.ae/mobile/public/api/getAllMessages',{c_id:c_id},function (data) {
 
                 //console.log(data);
                 $.each(data.message,function (key,value) {
@@ -613,7 +613,7 @@ $$(document).on('pageInit', function (e) {
 
             var token = window.localStorage.getItem('token');
 
-            $.post('http://mytutor.ae/mobile/public/api/postMessages?token='+token,{id:id,receiver_id:receiver_id,message:messageText},function (data) {
+            $.post('http://mytutor.ae/mobile/public/api/postMessages',{id:id,receiver_id:receiver_id,message:messageText},function (data) {
                 console.log(data);
             });
 
@@ -638,7 +638,7 @@ $$(document).on('pageInit', function (e) {
 
             var period =  window.localStorage.getItem('period');
             myApp.showPreloader();
-            $.post('http://mytutor.ae/mobile/public/api/store?token='+token,{plan_type:'basic',period:period},function (data) {
+            $.post('http://mytutor.ae/mobile/public/api/store',{plan_type:'basic',period:period},function (data) {
                 myApp.hidePreloader();
                 if(data == 'success'){
                     myApp.alert('You have successfully subscribed to Basic Subscription','Alert!');
@@ -650,7 +650,7 @@ $$(document).on('pageInit', function (e) {
             myApp.showPreloader();
             var period =  window.localStorage.getItem('period');
             var price = window.localStorage.getItem('price');
-            $.post('http://mytutor.ae/mobile/public/api/store?token='+token,{plan_type:'premium',period:period,plan_price:price},function (data) {
+            $.post('http://mytutor.ae/mobile/public/api/store',{plan_type:'premium',period:period,plan_price:price},function (data) {
                 myApp.hidePreloader();
                 //  window.location.href = data;
                 console.log(data);
@@ -666,16 +666,12 @@ $$(document).on('pageInit', function (e) {
     if (page.name === 'student-profile') {
         myApp.showPreloader();
         var id = window.localStorage.getItem('id');
-        $.post('http://mytutor.ae/mobile/public/api/student_profile?token='+token,{id:id},function (data) {
+        $.post('http://mytutor.ae/mobile/public/api/student_profile',{id:id},function (data) {
             // console.log(data);
             myApp.hidePreloader();
-            $('#name').text(data[0].f_name+' ' +data[0].l_name);
-            $('#address').text(data[0].address);
-            $('#city').text(data[0].city);
-            $('#area').text(data[0].area);
-            $('#subject').text(data[0].subject_name);
-            $('#category').text(data[0].category_name);
-            $('#message_btn').data('id',data[0].id);
+            $('#name').text(data[0].F_Name+' ' +data[0].L_Name);
+            $('#city').text(data[0].city_name);
+            $('#message_btn').data('id',data[0].ID);
             window.localStorage.removeItem('id');
 
         });
@@ -685,12 +681,11 @@ $$(document).on('pageInit', function (e) {
 
         var id = window.localStorage.getItem('id');
         myApp.showPreloader();
-        $.post('http://mytutor.ae/mobile/public/api/tutor_profile?token='+token,{id:id},function (data) {
+        $.post('http://mytutor.ae/mobile/public/api/tutor_profile',{id:id},function (data) {
             myApp.hidePreloader();
             //console.log(data);
-            $('#name').text(data[0].f_name+' ' +data[0].l_name);
-            $('#city').text(data[0].city);
-            $('#area').text(data[0].area);
+            $('#name').text(data[0].F_Name+' ' +data[0].L_Name);
+            $('#city').text(data[0].city_name);
             window.localStorage.removeItem('id');
 
         });
@@ -700,17 +695,14 @@ $$(document).on('pageInit', function (e) {
 
         var id = window.localStorage.getItem('id');
         myApp.showPreloader();
-        $.post('http://mytutor.ae/mobile/public/api/institute_profile?token='+token,{id:id},function (data) {
+        $.post('http://mytutor.ae/mobile/public/api/institute_profile',{id:id},function (data) {
             myApp.hidePreloader();
             // console.log(data);
-            $('#name').text(data[0].institute);
-            $('#c_person').text(data[0].c_person);
-            $('#address').text(data[0].address);
-            $('#city').text(data[0].city);
-            $('#area').text(data[0].area);
-            $('#email').text(data[0].email);
-            $('#phone').text(data[0].phone);
-            $('#landline').text(data[0].landline);
+            $('#institute').text(data[0].Name);
+            $('#c_person').text(data[0].Contact_Person);
+            $('#address').text(data[0].Address);
+            $('#city').text(data[0].city_name);
+            $('#email').text(data[0].Email);
             window.localStorage.removeItem('id');
 
         });
@@ -745,7 +737,7 @@ function getID(element) {
     window.localStorage.setItem('id',id);
     var token = window.localStorage.getItem('token');
     var user_type = window.localStorage.getItem('user_type');
-    $.post('http://mytutor.ae/mobile/public/api/permissions?token='+token,{id:id},function (data) {
+    $.post('http://mytutor.ae/mobile/public/api/permissions',{id:id},function (data) {
 
         if(data == 'allowed'){
 
@@ -761,7 +753,7 @@ function getID(element) {
 }
 
 function mailSignin(element){
-    var token = window.localStorage.getItem('token');
+    var token = window.localStorage.getItem('auth_id');
     if(!token){
         myApp.alert("You must signin to access this",'Alert!');
         $(element).prop('href','#');
