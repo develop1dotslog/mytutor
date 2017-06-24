@@ -66,6 +66,9 @@ $$('.popup-search').on('popup:open', function () {
 var user_type =  window.localStorage.getItem('user_type');
 if(user_type == 1){
     $$('#membership').hide();
+    $$('#student_post').show();
+}else{
+    $$('#student_post').hide();
 }
 
 var token = window.localStorage.getItem('auth_id');
@@ -95,6 +98,7 @@ $$('#log_out').on('click',function () {
     $$('#logout').hide();
     $$('#signup').show();
     $$('#membership').hide();
+    $$('#student_post').hide();
 });
 
 $$(document).on('pageInit', function (e) {
@@ -387,8 +391,10 @@ $$(document).on('pageInit', function (e) {
                     var user_type =  window.localStorage.getItem('user_type');
                     if(user_type == 1){
                         $$('#membership').hide();
+                        $$('#student_post').show();
                     }else{
                         $$('#membership').show();
+                        $$('#student_post').hide();
                     }
 
                     $$('#login').hide();
@@ -474,8 +480,10 @@ $$(document).on('pageInit', function (e) {
     }
 
     if (page.name === 'inbox') {
+
+        var auth_id =   window.localStorage.getItem('auth_id');
         myApp.showPreloader();
-        $.get('http://mytutor.ae/mobile/public/api/getAllConversation',function (data) {
+        $.post('http://mytutor.ae/mobile/public/api/getAllConversation',{auth_id:auth_id},function (data) {
             // console.log(data);
             myApp.hidePreloader();
 
@@ -484,7 +492,7 @@ $$(document).on('pageInit', function (e) {
             console.log(data);
             $.each(data.conversation,function (key,value) {
 
-                var auth_id =   window.localStorage.getItem('auth_id');
+
                 if(auth_id != value.user_one){
                     receiver_id = value.user_one;
                 }else if(auth_id != value.user_two){
@@ -509,7 +517,6 @@ $$(document).on('pageInit', function (e) {
 
 
         });
-
 
 
     }
@@ -708,6 +715,53 @@ $$(document).on('pageInit', function (e) {
         });
     }
 
+    if (page.name === 'student-post') {
+
+        var auth_id = window.localStorage.getItem('auth_id');
+        $.get('http://mytutor.ae/mobile/public/api/getAllLevels',function (data) {
+            // console.log(data);
+            $.each(data,function (key,value) {
+                $('.level').append('<option value="'+value.ID+'">'+value.Name+'</option>');
+            });
+        });
+
+        $.get('http://mytutor.ae/mobile/public/api/getAllSubjects',function (data) {
+            // console.log(data);
+            $.each(data,function (key,value) {
+                $('.subject').append('<option value="'+value.ID+'">'+value.Name+'</option>');
+            });
+        });
+
+        $.get('http://mytutor.ae/mobile/public/api/getAllCategory',function (data) {
+            // console.log(data);
+            $.each(data,function (key,value) {
+                $('.category').append('<option value="'+value.ID+'">'+value.Name+'</option>');
+            });
+        });
+
+
+        $('#post_btn').on('click',function () {
+            event.preventDefault();
+
+            var category_id = $('#category_id').val();
+            var subject_id = $('#subject_id').val();
+            var level_id = $('#level_id').val();
+            var hour_per_week = $('#hour_per_week').val();
+            var description = $('#description').val();
+            var user_type = 1;
+
+                myApp.showPreloader();
+                //console.log(hour_per_week);
+                $.post('http://mytutor.ae/mobile/public/api/postAd',{category_id:category_id,subject_id:subject_id,
+                    level_id:level_id,hour_per_week:hour_per_week,description:description,auth_id:auth_id},function (data) {
+                    myApp.hidePreloader();
+                    myApp.alert(data,"Alert!!");
+                        mainView.router.loadPage('index.html');
+                });
+
+
+        });
+    }
 });
 
 function getPeriod(element) {
