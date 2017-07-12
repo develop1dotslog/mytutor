@@ -63,8 +63,8 @@ $$('.popup-search').on('popup:open', function () {
 });
 
 
-var user_type =  window.localStorage.getItem('user_type');
-if(user_type == 1){
+var auth_type =  window.localStorage.getItem('auth_type');
+if(auth_type == 1){
     $$('#membership').hide();
     $$('#student_post').show();
 }else{
@@ -104,9 +104,9 @@ $$('#log_out').on('click',function () {
 $$(document).on('pageInit', function (e) {
     // Get page data from event data
     var page = e.detail.page;
-    var token = window.localStorage.getItem('token');
+    var auth_id = window.localStorage.getItem('auth_id');
     if (page.name === 'index') {
-        $.get('http://mytutor.ae/mobile/public/api/checkForExpiry',function (data) {
+        $.post('http://mytutor.ae/mobile/public/api/checkForExpiry',{auth_id:auth_id},function (data) {
             if(data == 'Account Expired'){
                 myApp.alert(data,'Alert!');
             }
@@ -114,7 +114,6 @@ $$(document).on('pageInit', function (e) {
 
         cityGetter();
     }
-
     if (page.name === 'contact') {
 
         $('#send_btn').on('click',function(){
@@ -137,8 +136,6 @@ $$(document).on('pageInit', function (e) {
             mainView.router.loadPage('index.html');
         });
     }
-
-
     if (page.name === 'search-result') {
 
 
@@ -201,7 +198,6 @@ $$(document).on('pageInit', function (e) {
         });
 
     }
-
     if (page.name === 'student-signup') {
 
         cityGetter();
@@ -380,16 +376,18 @@ $$(document).on('pageInit', function (e) {
             myApp.showPreloader();
             $.post('http://mytutor.ae/mobile/public/api/postLogin',{email:email,password:password,user_type:user_type},function (data) {
                 myApp.hidePreloader();
+                console.log(data);
                 if(data.error){
                     myApp.alert(data.error,'Alert!');
-                }else{
+                }
+                else
+                {
                     mainView.router.loadPage('index.html');
                     myApp.alert("You have successfully signed in!!",'Alert!');
-                    window.localStorage.setItem('user_type',data.user_type);
-                    window.localStorage.setItem('auth_id',data.user['ID']);
-
-                    var user_type =  window.localStorage.getItem('user_type');
-                    if(user_type == 1){
+                    window.localStorage.setItem('auth_type',data.user_type);
+                    window.localStorage.setItem('auth_id',data.user['id']);
+                    var auth_type =  window.localStorage.getItem('auth_type');
+                    if(auth_type == 1){
                         $$('#membership').hide();
                         $$('#student_post').show();
                     }else{
@@ -402,7 +400,6 @@ $$(document).on('pageInit', function (e) {
                     $$('#logout').show();
                 }
 
-                console.log(data);
             });
         });
     }
@@ -418,14 +415,20 @@ $$(document).on('pageInit', function (e) {
                     '<div class="data-table data-table-init card"><div class="card-content">' +
                     '<img src="img/avatar/student.png" class="responsive" /><table>' +
                     '<tbody><tr><th style="border-top: 1px solid #e0e0e0;">Name</th>' +
-                    '<td>'+value.F_Name+' '+value.L_Name+'</td></tr><tr><th>City</th><td>'+value.City+'</td></tr>' +
+                    '<td>'+value.f_name+' '+value.l_name+'</td></tr><tr><th>City</th><td>'+value.city_name+'</td></tr>' +
                     '<tr><th>Category</th><td>'+value.category_name+'</td>' +
                     '</tr><tr><th style="border-bottom: none!important;">Subjects</th>' +
                     '<td>'+value.subject_name+'</td></tr></tbody></table>' +
-                    '<br/><div class="buttons"><a href="#" data-id="'+value.ID+'" onclick="mailSignin(this);getID(this)"  class="button button-fill button-raised">View Ad</a>' +
-                    '<a href="student-profile.html" data-id="'+value.ID+'" onclick="mailSignin(this);getID(this)" class="button button-fill button-raised">View Profile</a>' +
-                    '<a href="message.html" data-id="'+value.ID+'" onclick="mailSignin(this);getID(this)" class="button button-fill button-raised">Send Message</a></div>' +
+                    '<br/><div class="buttons"><a href="#" data-id="'+value.user_id+'" onclick="mailSignin(this);getID(this)"  class="button button-fill button-raised">View Ad</a>' +
+                    '<a href="student-profile.html" data-id="'+value.user_id+'" onclick="mailSignin(this);getID(this)" class="button button-fill button-raised">View Profile</a>' +
+                    '</div>' +
                     '</div></div></div>');
+                var auth_type =  window.localStorage.getItem('auth_type');
+                if(auth_type == 2 || auth_type == 3)
+                {
+                    $('.buttons').append('<a href="message.html" data-id="'+value.user_id+'" onclick="mailSignin(this);getID(this)" class="button button-fill button-raised">Send Message</a>')
+                }
+
             })
         });
 
@@ -440,13 +443,13 @@ $$(document).on('pageInit', function (e) {
 
                 $('#main').append('<div class="thumbnail"><div class="data-table data-table-init card">' +
                     '<div class="card-content"><img src="img/avatar/institute.png" class="responsive" />' +
-                    '<h3>'+value.Name+'</h3>' +
+                    '<h3>'+value.institute+'</h3>' +
                     '<p> Lorem ipsum dolor sit amet, consectetur adipisicing elit.' +
                     '</p><table><tbody><tr><th>City</th><td>'+value.city_name+'</td>' +
                     '</tr>' +
                     '</tbody></table>' +
-                    '<br/><div class="buttons"><a href="institute-profile.html" data-id="'+value.ID+'" onclick="mailSignin(this);getID(this)" class="button button-fill button-raised">View Profile</a>' +
-                    '<a href="message.html" data-id="'+value.ID+'" onclick="mailSignin(this);getID(this)" class="button button-fill button-raised">Send Message</a>' +
+                    '<br/><div class="buttons"><a href="institute-profile.html" data-id="'+value.id+'" onclick="mailSignin(this);getID(this)" class="button button-fill button-raised">View Profile</a>' +
+                    '<a href="message.html" data-id="'+value.id+'" onclick="mailSignin(this);getID(this)" class="button button-fill button-raised">Send Message</a>' +
                     '<a href="" class="button button-fill button-raised">Read Reviews</a></div></div></div>');
 
 
@@ -466,12 +469,12 @@ $$(document).on('pageInit', function (e) {
                 $('#main').append(' <div class="thumbnail"><div class="data-table data-table-init card">' +
                     ' <div class="card-content">' +
                     '<img src="img/avatar/tutor.png" class="responsive" />' +
-                    '<h3>'+value.F_Name+' '+value.L_Name+'</h3><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.' +
+                    '<h3>'+value.f_name+' '+value.l_name+'</h3><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.' +
                     '</p><table><tbody> <tr><th>City</th><td>'+value.city_name+'</td>' +
                     '</tr>' +
                     ' </tbody></table><br/><div class="buttons">' +
-                    '<a href="tutor-profile.html"  data-id="'+value.ID+'" onclick="mailSignin(this);getID(this)" class="button button-fill button-raised">View Profile</a>' +
-                    '<a href="message.html"  data-id="'+value.ID+'" onclick="mailSignin(this);getID(this)" class="button button-fill button-raised">Send Message</a>' +
+                    '<a href="tutor-profile.html"  data-id="'+value.id+'" onclick="mailSignin(this);getID(this)" class="button button-fill button-raised">View Profile</a>' +
+                    '<a href="message.html"  data-id="'+value.id+'" onclick="mailSignin(this);getID(this)" class="button button-fill button-raised">Send Message</a>' +
                     '<a href="" class="button button-fill button-raised">Read Reviews</a>' +
                     '</div></div></div>');
             });
@@ -498,7 +501,7 @@ $$(document).on('pageInit', function (e) {
                 }else if(auth_id != value.user_two){
                     receiver_id = value.user_two;
                 }
-                if(data.receiver[key].f_name == '' && data.receiver[key].l_name){
+                if(data.receiver[key].user_type == 3){
 
                     receiver =  data.receiver[key].institute;
                 }else{
@@ -522,6 +525,8 @@ $$(document).on('pageInit', function (e) {
     }
 
     if (page.name === 'message') {
+
+        var auth_id =  window.localStorage.getItem('auth_id');
         // Conversation flag
         var conversationStarted = false;
 
@@ -571,7 +576,7 @@ $$(document).on('pageInit', function (e) {
         var id =   window.localStorage.getItem('id');
 
         if(!c_id){
-            $.post('http://mytutor.ae/mobile/public/api/getAllMessages',{id:id},function (data) {
+            $.post('http://mytutor.ae/mobile/public/api/getAllMessages',{id:id,auth_id:auth_id},function (data) {
 
                 console.log(data);
                 $.each(data.message,function (key,value) {
@@ -589,7 +594,7 @@ $$(document).on('pageInit', function (e) {
                 });
             });
         }else{
-            $.post('http://mytutor.ae/mobile/public/api/getAllMessages',{c_id:c_id},function (data) {
+            $.post('http://mytutor.ae/mobile/public/api/getAllMessages',{c_id:c_id,auth_id:auth_id},function (data) {
 
                 //console.log(data);
                 $.each(data.message,function (key,value) {
@@ -620,7 +625,7 @@ $$(document).on('pageInit', function (e) {
 
             var token = window.localStorage.getItem('token');
 
-            $.post('http://mytutor.ae/mobile/public/api/postMessages',{id:id,receiver_id:receiver_id,message:messageText},function (data) {
+            $.post('http://mytutor.ae/mobile/public/api/postMessages',{auth_id:auth_id,id:id,receiver_id:receiver_id,message:messageText},function (data) {
                 console.log(data);
             });
 
@@ -632,11 +637,11 @@ $$(document).on('pageInit', function (e) {
 
     if (page.name === 'membership') {
 
-        var user_type =  window.localStorage.getItem('user_type');
-        if(user_type == 2){
+        var auth_type =  window.localStorage.getItem('auth_type');
+        if(auth_type == 2){
             $('.institute').hide();
             $('.tutor').show();
-        }else if(user_type == 3){
+        }else if(auth_type == 3){
             $('.institute').show();
             $('.tutor').hide();
         }
@@ -644,8 +649,9 @@ $$(document).on('pageInit', function (e) {
         $('#basic').on('click',function () {
 
             var period =  window.localStorage.getItem('period');
+            var auth_id = window.localStorage.getItem('auth_id');
             myApp.showPreloader();
-            $.post('http://mytutor.ae/mobile/public/api/store',{plan_type:'basic',period:period},function (data) {
+            $.post('http://mytutor.ae/mobile/public/api/store',{plan_type:'basic',period:period,auth_id:auth_id},function (data) {
                 myApp.hidePreloader();
                 if(data == 'success'){
                     myApp.alert('You have successfully subscribed to Basic Subscription','Alert!');
@@ -657,7 +663,8 @@ $$(document).on('pageInit', function (e) {
             myApp.showPreloader();
             var period =  window.localStorage.getItem('period');
             var price = window.localStorage.getItem('price');
-            $.post('http://mytutor.ae/mobile/public/api/store',{plan_type:'premium',period:period,plan_price:price},function (data) {
+            var auth_id = window.localStorage.getItem('auth_id');
+            $.post('http://mytutor.ae/mobile/public/api/store',{auth_id:auth_id,plan_type:'premium',period:period,plan_price:price},function (data) {
                 myApp.hidePreloader();
                 //  window.location.href = data;
                 console.log(data);
@@ -789,9 +796,9 @@ function getID(element) {
     //  $(element).attr('href','membership.html');
     var id = $(element).data('id');
     window.localStorage.setItem('id',id);
-    var token = window.localStorage.getItem('token');
-    var user_type = window.localStorage.getItem('user_type');
-    $.post('http://mytutor.ae/mobile/public/api/permissions',{id:id},function (data) {
+    var auth_id = window.localStorage.getItem('auth_id');
+    var auth_type = window.localStorage.getItem('auth_type');
+    $.post('http://mytutor.ae/mobile/public/api/permissions',{id:id,auth_id:auth_id},function (data) {
 
         if(data == 'allowed'){
 
