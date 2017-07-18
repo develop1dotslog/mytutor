@@ -106,7 +106,7 @@ $$(document).on('pageInit', function (e) {
     var page = e.detail.page;
     var auth_id = window.localStorage.getItem('auth_id');
     if (page.name === 'index') {
-        $.post('http://mytutor.ae/mobile/public/api/checkForExpiry',{auth_id:auth_id},function (data) {
+        $.post('http://dotslog.com/mobile/public/api/checkForExpiry',{auth_id:auth_id},function (data) {
             if(data == 'Account Expired'){
                 myApp.alert(data,'Alert!');
             }
@@ -146,7 +146,7 @@ $$(document).on('pageInit', function (e) {
 
         var name = "";
         myApp.showPreloader();
-        $.post('http://mytutor.ae/mobile/public/api/search',{user_type:user_type,city:city},function (data) {
+        $.post('http://dotslog.com/mobile/public/api/search',{user_type:user_type,city:city},function (data) {
 
             console.log(data);
              window.localStorage.removeItem('user_type');
@@ -202,21 +202,21 @@ $$(document).on('pageInit', function (e) {
 
         cityGetter();
 
-        $.get('http://mytutor.ae/mobile/public/api/getAllLevels',function (data) {
+        $.get('http://dotslog.com/mobile/public/api/getAllLevels',function (data) {
             // console.log(data);
             $.each(data,function (key,value) {
                 $('.level').append('<option value="'+value.ID+'">'+value.Name+'</option>');
             });
         });
 
-        $.get('http://mytutor.ae/mobile/public/api/getAllSubjects',function (data) {
+        $.get('http://dotslog.com/mobile/public/api/getAllSubjects',function (data) {
             // console.log(data);
             $.each(data,function (key,value) {
                 $('.subject').append('<option value="'+value.ID+'">'+value.Name+'</option>');
             });
         });
 
-        $.get('http://mytutor.ae/mobile/public/api/getAllCategory',function (data) {
+        $.get('http://dotslog.com/mobile/public/api/getAllCategory',function (data) {
             // console.log(data);
             $.each(data,function (key,value) {
                 $('.category').append('<option value="'+value.ID+'">'+value.Name+'</option>');
@@ -248,7 +248,7 @@ $$(document).on('pageInit', function (e) {
             }else{
                 myApp.showPreloader();
                 //console.log(hour_per_week);
-                $.post('http://mytutor.ae/mobile/public/api/postSignup',{mobile:mobile,gender:gender,f_name:f_name,l_name:l_name,address:address,
+                $.post('http://dotslog.com/mobile/public/api/postSignup',{mobile:mobile,gender:gender,f_name:f_name,l_name:l_name,address:address,
                     city:city,email:email,password:password,category_id:category_id,subject_id:subject_id,
                     level_id:level_id,hour_per_week:hour_per_week,description:description,user_type:user_type},function (data) {
                     //console.log(data);
@@ -298,7 +298,7 @@ $$(document).on('pageInit', function (e) {
             }else{
                 myApp.showPreloader();
                 //console.log(hour_per_week);
-                $.post('http://mytutor.ae/mobile/public/api/postSignup',{gender:gender,f_name:f_name,l_name:l_name,address:address,
+                $.post('http://dotslog.com/mobile/public/api/postSignup',{gender:gender,f_name:f_name,l_name:l_name,address:address,
                     city:city,email:email,password:password,category_id:category_id,subject_id:subject_id,
                     level_id:level_id,hour_per_week:hour_per_week,description:description,user_type:user_type,title:title,
                     dob:dob,mobile:mobile,phone:phone},function (data) {
@@ -346,7 +346,7 @@ $$(document).on('pageInit', function (e) {
             }else{
                 myApp.showPreloader();
                 //console.log(hour_per_week);
-                $.post('http://mytutor.ae/mobile/public/api/postSignup',{address:address,
+                $.post('http://dotslog.com/mobile/public/api/postSignup',{address:address,
                     city:city,email:email,password:password,category_id:category_id,subject_id:subject_id,
                     level_id:level_id,hour_per_week:hour_per_week,description:description,user_type:user_type,
                     dob:dob,mobile:mobile,phone:phone,institute:institute,c_person:c_person,landline:landline},function (data) {
@@ -374,7 +374,7 @@ $$(document).on('pageInit', function (e) {
             var password = $('#password').val();
             var user_type = $('#user_type').val();
             myApp.showPreloader();
-            $.post('http://mytutor.ae/mobile/public/api/postLogin',{email:email,password:password,user_type:user_type},function (data) {
+            $.post('http://dotslog.com/mobile/public/api/postLogin',{email:email,password:password,user_type:user_type},function (data) {
                 myApp.hidePreloader();
                 console.log(data);
                 if(data.error){
@@ -406,7 +406,7 @@ $$(document).on('pageInit', function (e) {
     if (page.name === 'search-student') {
 
         myApp.showPreloader();
-        $.get('http://mytutor.ae/mobile/public/api/getAllStudent',function (data) {
+        $.get('http://dotslog.com/mobile/public/api/getAllStudent',function (data) {
             myApp.hidePreloader();
             console.log(data);
             $.each(data,function (key,value) {
@@ -436,7 +436,7 @@ $$(document).on('pageInit', function (e) {
 
     if (page.name === 'search-institute') {
         myApp.showPreloader();
-        $.get('http://mytutor.ae/mobile/public/api/getAllInstitute',function (data) {
+        $.get('http://dotslog.com/mobile/public/api/getAllInstitute',function (data) {
             myApp.hidePreloader();
             //console.log(data);
             $.each(data,function (key,value) {
@@ -461,7 +461,7 @@ $$(document).on('pageInit', function (e) {
 
     if (page.name === 'search-tutor') {
         myApp.showPreloader();
-        $.get('http://mytutor.ae/mobile/public/api/getAllTutor',function (data) {
+        $.get('http://dotslog.com/mobile/public/api/getAllTutor',function (data) {
             myApp.hidePreloader();
             // console.log(data);
             $.each(data,function (key,value) {
@@ -486,7 +486,7 @@ $$(document).on('pageInit', function (e) {
 
         var auth_id =   window.localStorage.getItem('auth_id');
         myApp.showPreloader();
-        $.post('http://mytutor.ae/mobile/public/api/getAllConversation',{auth_id:auth_id},function (data) {
+        $.post('http://dotslog.com/mobile/public/api/getAllConversation',{auth_id:auth_id},function (data) {
             // console.log(data);
             myApp.hidePreloader();
 
@@ -576,7 +576,7 @@ $$(document).on('pageInit', function (e) {
         var id =   window.localStorage.getItem('id');
 
         if(!c_id){
-            $.post('http://mytutor.ae/mobile/public/api/getAllMessages',{id:id,auth_id:auth_id},function (data) {
+            $.post('http://dotslog.com/mobile/public/api/getAllMessages',{id:id,auth_id:auth_id},function (data) {
 
                 console.log(data);
                 $.each(data.message,function (key,value) {
@@ -594,7 +594,7 @@ $$(document).on('pageInit', function (e) {
                 });
             });
         }else{
-            $.post('http://mytutor.ae/mobile/public/api/getAllMessages',{c_id:c_id,auth_id:auth_id},function (data) {
+            $.post('http://dotslog.com/mobile/public/api/getAllMessages',{c_id:c_id,auth_id:auth_id},function (data) {
 
                 //console.log(data);
                 $.each(data.message,function (key,value) {
@@ -625,7 +625,7 @@ $$(document).on('pageInit', function (e) {
 
             var token = window.localStorage.getItem('token');
 
-            $.post('http://mytutor.ae/mobile/public/api/postMessages',{auth_id:auth_id,id:id,receiver_id:receiver_id,message:messageText},function (data) {
+            $.post('http://dotslog.com/mobile/public/api/postMessages',{auth_id:auth_id,id:id,receiver_id:receiver_id,message:messageText},function (data) {
                 console.log(data);
             });
 
@@ -651,7 +651,7 @@ $$(document).on('pageInit', function (e) {
             var period =  window.localStorage.getItem('period');
             var auth_id = window.localStorage.getItem('auth_id');
             myApp.showPreloader();
-            $.post('http://mytutor.ae/mobile/public/api/store',{plan_type:'basic',period:period,auth_id:auth_id},function (data) {
+            $.post('http://dotslog.com/mobile/public/api/store',{plan_type:'basic',period:period,auth_id:auth_id},function (data) {
                 myApp.hidePreloader();
                 if(data == 'success'){
                     myApp.alert('You have successfully subscribed to Basic Subscription','Alert!');
@@ -664,7 +664,7 @@ $$(document).on('pageInit', function (e) {
             var period =  window.localStorage.getItem('period');
             var price = window.localStorage.getItem('price');
             var auth_id = window.localStorage.getItem('auth_id');
-            $.post('http://mytutor.ae/mobile/public/api/store',{auth_id:auth_id,plan_type:'premium',period:period,plan_price:price},function (data) {
+            $.post('http://dotslog.com/mobile/public/api/store',{auth_id:auth_id,plan_type:'premium',period:period,plan_price:price},function (data) {
                 myApp.hidePreloader();
                 //  window.location.href = data;
                 console.log(data);
@@ -680,7 +680,7 @@ $$(document).on('pageInit', function (e) {
     if (page.name === 'student-profile') {
         myApp.showPreloader();
         var id = window.localStorage.getItem('id');
-        $.post('http://mytutor.ae/mobile/public/api/student_profile',{id:id},function (data) {
+        $.post('http://dotslog.com/mobile/public/api/student_profile',{id:id},function (data) {
             // console.log(data);
             myApp.hidePreloader();
             $('#name').text(data[0].F_Name+' ' +data[0].L_Name);
@@ -695,7 +695,7 @@ $$(document).on('pageInit', function (e) {
 
         var id = window.localStorage.getItem('id');
         myApp.showPreloader();
-        $.post('http://mytutor.ae/mobile/public/api/tutor_profile',{id:id},function (data) {
+        $.post('http://dotslog.com/mobile/public/api/tutor_profile',{id:id},function (data) {
             myApp.hidePreloader();
             //console.log(data);
             $('#name').text(data[0].F_Name+' ' +data[0].L_Name);
@@ -709,7 +709,7 @@ $$(document).on('pageInit', function (e) {
 
         var id = window.localStorage.getItem('id');
         myApp.showPreloader();
-        $.post('http://mytutor.ae/mobile/public/api/institute_profile',{id:id},function (data) {
+        $.post('http://dotslog.com/mobile/public/api/institute_profile',{id:id},function (data) {
             myApp.hidePreloader();
             // console.log(data);
             $('#institute').text(data[0].Name);
@@ -725,21 +725,21 @@ $$(document).on('pageInit', function (e) {
     if (page.name === 'student-post') {
 
         var auth_id = window.localStorage.getItem('auth_id');
-        $.get('http://mytutor.ae/mobile/public/api/getAllLevels',function (data) {
+        $.get('http://dotslog.com/mobile/public/api/getAllLevels',function (data) {
             // console.log(data);
             $.each(data,function (key,value) {
                 $('.level').append('<option value="'+value.ID+'">'+value.Name+'</option>');
             });
         });
 
-        $.get('http://mytutor.ae/mobile/public/api/getAllSubjects',function (data) {
+        $.get('http://dotslog.com/mobile/public/api/getAllSubjects',function (data) {
             // console.log(data);
             $.each(data,function (key,value) {
                 $('.subject').append('<option value="'+value.ID+'">'+value.Name+'</option>');
             });
         });
 
-        $.get('http://mytutor.ae/mobile/public/api/getAllCategory',function (data) {
+        $.get('http://dotslog.com/mobile/public/api/getAllCategory',function (data) {
             // console.log(data);
             $.each(data,function (key,value) {
                 $('.category').append('<option value="'+value.ID+'">'+value.Name+'</option>');
@@ -759,7 +759,7 @@ $$(document).on('pageInit', function (e) {
 
                 myApp.showPreloader();
                 //console.log(hour_per_week);
-                $.post('http://mytutor.ae/mobile/public/api/postAd',{category_id:category_id,subject_id:subject_id,
+                $.post('http://dotslog.com/mobile/public/api/postAd',{category_id:category_id,subject_id:subject_id,
                     level_id:level_id,hour_per_week:hour_per_week,description:description,auth_id:auth_id},function (data) {
                     myApp.hidePreloader();
                     myApp.alert(data,"Alert!!");
@@ -798,7 +798,7 @@ function getID(element) {
     window.localStorage.setItem('id',id);
     var auth_id = window.localStorage.getItem('auth_id');
     var auth_type = window.localStorage.getItem('auth_type');
-    $.post('http://mytutor.ae/mobile/public/api/permissions',{id:id,auth_id:auth_id},function (data) {
+    $.post('http://dotslog.com/mobile/public/api/permissions',{id:id,auth_id:auth_id},function (data) {
 
         if(data == 'allowed'){
 
@@ -4398,7 +4398,7 @@ function areaGiver(city) {
 }
 
 function cityGetter() {
-    $.get('http://mytutor.ae/mobile/public/api/getAllCities',function (data) {
+    $.get('http://dotslog.com/mobile/public/api/getAllCities',function (data) {
         // console.log(data);
         $('#cities option:not(:first)').remove();
         $.each(data,function (key,value) {
