@@ -51,6 +51,12 @@
         <preference name="phonegap-version"       value="3.5.0" />
     -->
 
+	  <gap:config-file platform="ios" parent="UISupportedInterfaceOrientations" overwrite="true">
+        <array>
+            <string>UIInterfaceOrientationLandscapeOmg</string>
+        </array>
+	
+	
     <!-- Plugins -->
 
     <!-- Core plugins -->
