@@ -50,7 +50,12 @@
         Define a specific version of PhoneGap to build into your app.
         <preference name="phonegap-version"       value="3.5.0" />
     -->
+ <!-- iOS only -->
 
+  <preference name="prerendered-icon" value="true" />
+  <preference name="detect-data-types" value="true" />
+  <preference name="exit-on-suspend" value="true" />
+  <preference name="deployment-target" value="10.3.3" />
 	
 	
     <!-- Plugins -->
