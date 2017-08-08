@@ -47,6 +47,10 @@
     <preference name="disable-cursor"             value="false" />          <!-- blackberry: prevents a mouse-icon/cursor from being displayed on the app -->
     <preference name="android-installLocation"    value="auto" />           <!-- android: app install location. 'auto' will choose. 'internalOnly' is device memory. 'preferExternal' is SDCard. -->
    <gap:plugin name="cc.fovea.cordova.purchase" source="npm" version="6.0.0" />
+	
+	<gap:plugin name="cc.fovea.cordova.purchase" source="npm" version="6.0.0">
+   <param name="BILLING_KEY" value="MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuhav/W85VVOYqWTqVE396+fkpIH8eS6bUY5fEdnKMCHwWyvwdvt5bI0C7Vr1Db1EfBlLXhsTQTbMuM/isVpwbBDGQPcGt/kZwcjZeyONTBHaAC4awHAXQlsX97xnHHR5dFiZtiTgBhDpzHp9gmIQkaoeQ/123V8N+sMqfzH9d9FEm8B6M9GIASuvwQw2/AO8ugq01EZ7OMfb5RAXCGeg9yAG65QQLZ6n3OecT48myw3Vf85op6HTiFGQGVLWp0UlSSoSQ+a1qkhmUGqDdG7gkUhB2dbH8Re18mY5rQF1umltUPKxK1kkdThcUpiu4qZDKAgQLO4H1LpGwLnYl2E+xwIDAQAB"/>
+</gap:plugin>
     <!--
         Define a specific version of PhoneGap to build into your app.
         <preference name="phonegap-version"       value="3.5.0" />
